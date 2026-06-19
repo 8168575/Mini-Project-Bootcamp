@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+# Home Interior Planner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Home Interior Layout Planner** is a React application that lets you design a room floor plan and place furniture using an interactive, centimeter-accurate canvas.
 
-## Available Scripts
+You can:
+- Choose a room type (Bedroom, Living Room, Office, Kitchen, Dining Room, Custom)
+- Drag furniture from a catalog onto the room
+- Move, resize, and rotate placed items (with grid snapping options)
+- Save multiple designs and switch between them
+- Refresh safely: drafts and saved designs persist in `localStorage`
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Demo / Screenshots
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+> Add screenshots or a short GIF here once you have them.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React** (Create React App)
+- **DnD Kit** (`@dnd-kit/core`, `@dnd-kit/modifiers`) for drag & drop
+- **Zustand** for state management
+- **Tailwind CSS** for styling
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Key Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1) Scale-correct canvas (centimeters)
+- Room dimensions and furniture dimensions are handled in **cm**.
+- The app computes `pixelsPerCm` to render everything accurately.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 2) Direct manipulation on the canvas
+- **Drag** catalog items into the room
+- **Select** placed items to edit them
+- **Resize** using corner handles (with live dimension readout)
+- **Rotate** with pointer math + angle snapping
 
-### `npm run eject`
+### 3) Grid + snapping controls
+- Toggle grid visibility
+- Toggle snap-to-grid
+- Configure grid size
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 4) Draft + saved designs persistence
+- Draft (active room design + UI state) is saved to `localStorage`
+- Saved designs are stored separately and remain after refresh
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js (LTS recommended)
+- npm
 
-## Learn More
+### Install dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd home-interior-planner
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Run locally
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Opens the app at: http://localhost:3000
 
-### Analyzing the Bundle Size
+### Run tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+npm test
+```
 
-### Making a Progressive Web App
+### Build for production
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+npm run build
+```
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Project Structure (high level)
 
-### Deployment
+- `src/components/canvas/RoomCanvas.jsx`
+  - The main scale-correct floor plan canvas
+  - Renders furniture items and interaction overlays
+- `src/components/catalog/`
+  - Furniture catalog UI (search/filter + cards)
+- `src/components/designs/`
+  - Saved designs gallery
+- `src/store/`
+  - Zustand store + persistence adapters
+- `src/utils/`
+  - Geometry + coordinate helpers (grid snapping, rotation, resize)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## Furniture Catalog
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Furniture is defined in `src/data/furnitureCatalog.js` as a static catalog of flat, top-down SVG icons.
+
+---
+
+## Persistence Keys
+
+- Draft: `home-interior-planner:draft-v1`
+- Saved designs: `home-interior-planner:saved-designs-v1`
+
+---
+
+## License
+
+MIT
+
+---
+
+## Notes for GitHub
+
+- Commit this project from `home-interior-planner/`.
+- Don’t commit `node_modules/` or the `build/` output (already covered by `.gitignore`).
+
